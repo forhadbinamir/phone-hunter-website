@@ -1,28 +1,43 @@
-
+// loading Spinner 
+const loadingSpinner = displayLoding => {
+    document.getElementById('spinner').style.display = displayLoding;
+}
 // clock event handler 
 document.getElementById('search-button').addEventListener('click', function () {
     const inputField = document.getElementById('input-field');
     const inputValue = inputField.value;
+    // display Spinner 
+    loadingSpinner('block')
     if (inputField.value == "") {
         document.getElementById('warning1').style.display = 'block';
-    } else {
+        document.getElementById('warning2').style.display = 'none';
+    }
+    else if (isNaN(inputValue) === false) {
+        document.getElementById('warning2').style.display = 'block';
+        document.getElementById('warning1').style.display = 'none';
+    }
+    else {
 
         // console.log(inputValue)
         inputField.value = '';
         // get the value from API
-        fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`)
+        fetch(`https://openapi.programming-hero.com/api/phones?search=${inputValue}`)
             .then(getphotos => getphotos.json())
             .then(phoneData => displayPhones(phoneData.data))
 
         document.getElementById('warning1').style.display = 'none';
+        document.getElementById('warning2').style.display = 'none';
 
     }
-})
 
+})
+// display phone with using arrow function in UI 
 const displayPhones = phones => {
     const slicephone = phones.slice(0, 20)
-    // console.log(slicephone);
     const cardField = document.getElementById('card-field');
+    cardField.textContent = ''
+    const phoneDetails = document.getElementById('phone-details')
+    phoneDetails.textContent = ''
     slicephone.forEach(phone => {
         // console.log(phone)
         const div = document.createElement('div')
@@ -36,10 +51,11 @@ const displayPhones = phones => {
                     <p class="card-text"></p>
                     <a href="#" onclick="showDetails('${phone.slug}')" class="btn btn-primary">Details</a>
                 </div>
+                
             </div>
         `
-        cardField.appendChild(div)
-
+        cardField.appendChild(div);
+        loadingSpinner('none')
     })
 
 }
@@ -64,23 +80,26 @@ const displayPhoneDetails = phoneDes => {
                 </div>
                 <div class="col-6">
                     <div class="card-body">
-                        <h3 class="card-title">${phoneDes.name}</h3>
-                        <h5 class="card-title">${phoneDes.brand}</h5>
-                        <p>${phoneDes.releaseDate}</p>
+                        <h3 class="card-title"><span class="fw-bold">Phone Name: </span>${phoneDes.name}</h3>
+                        <h5 class="card-title">Brand Name: ${phoneDes.brand}</h5>
+                        <p><span class="fw-bold">Release Date: </span> ${phoneDes.releaseDate ? phoneDes.releaseDate : ""}</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">${phoneDes.mainFeatures.chipSet}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.displaySize}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.storage}</li>
+                        <li class="list-group-item"><span class="fw-bold">Display Size: </span>${phoneDes.mainFeatures.displaySize}</li>
+                        <li class="list-group-item"><span class="fw-bold">Storage: </span>${phoneDes.mainFeatures.storage}</li>
                         <li class="list-group-item">${phoneDes.mainFeatures.memory}</li>
+
                         
                         <li class="list-group-item"><span class="fw-bold">Sensors</span></li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[0]}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[1]}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[2]}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[3]}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[4]}</li>
-                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[5]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[0] ? phoneDes.mainFeatures.sensors[0] : ""}, ${phoneDes.mainFeatures.sensors[1] ? phoneDes.mainFeatures.sensors[1] : ""}, ${phoneDes.mainFeatures.sensors[2] ? phoneDes.mainFeatures.sensors[2] : ""}, ${phoneDes.mainFeatures.sensors[3] ? phoneDes.mainFeatures.sensors[3] : ""}, ${phoneDes.mainFeatures.sensors[4] ? phoneDes.mainFeatures.sensors[4] : ""}, ${phoneDes.mainFeatures.sensors[5] ? phoneDes.mainFeatures.sensors[5] : ""}, ${phoneDes.mainFeatures.sensors[6] ? phoneDes.mainFeatures.sensors[6] : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">Others information</span></li>
+                        <li class="list-group-item"><span class="fw-bold">WLAN: </span>${phoneDes.others.WLAN ? phoneDes.others.WLAN : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">Bluetooth: </span>${phoneDes.others.Bluetooth ? phoneDes.others.Bluetooth : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">GPS: </span>${phoneDes.others.GPS ? phoneDes.others.GPS : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">NFC: </span>${phoneDes.others.NFC ? phoneDes.others.NFC : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">Radio: </span>${phoneDes.others.Radio ? phoneDes.others.Radio : ""}</li>
+                        <li class="list-group-item"><span class="fw-bold">USB: </span>${phoneDes.others.USB ? phoneDes.others.USB : ""}</li>
                         
                     </ul>
                 </div>
