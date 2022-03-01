@@ -9,6 +9,10 @@ document.getElementById('search-button').addEventListener('click', function () {
     // display Spinner 
     loadingSpinner('block')
     if (inputField.value == "") {
+        const cardField = document.getElementById('card-field');
+        cardField.textContent = ''
+        const phoneDetails = document.getElementById('phone-details')
+        phoneDetails.textContent = ''
         document.getElementById('warning1').style.display = 'block';
         document.getElementById('warning2').style.display = 'none';
     }
