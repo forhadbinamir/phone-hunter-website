@@ -3,15 +3,20 @@
 document.getElementById('search-button').addEventListener('click', function () {
     const inputField = document.getElementById('input-field');
     const inputValue = inputField.value;
-    if (inputField.value === 0) {
-        document.getElementById('warning').style.display = 'none';
+    if (inputField.value == "") {
+        document.getElementById('warning1').style.display = 'block';
+    } else {
+
+        // console.log(inputValue)
+        inputField.value = '';
+        // get the value from API
+        fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`)
+            .then(getphotos => getphotos.json())
+            .then(phoneData => displayPhones(phoneData.data))
+
+        document.getElementById('warning1').style.display = 'none';
+
     }
-    // console.log(inputValue)
-    inputField.value = '';
-    // get the value from API
-    fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`)
-        .then(getphotos => getphotos.json())
-        .then(phoneData => displayPhones(phoneData.data))
 })
 
 const displayPhones = phones => {
@@ -21,7 +26,7 @@ const displayPhones = phones => {
     slicephone.forEach(phone => {
         // console.log(phone)
         const div = document.createElement('div')
-        div.className = 'col-4'
+        div.className = 'col-lg-4 col-md-6 col-sm-12'
         div.innerHTML = `
         <div class="card">
                 <img src="${phone.image}" class="card-img-top img-fluid w-50" alt="...">
@@ -54,7 +59,7 @@ const displayPhoneDetails = phoneDes => {
     const div = document.createElement('div');
     div.className = 'row mt-5';
     div.innerHTML = `
-            <div class="col-6">
+            <div class="col-lg-6 col-sm-12">
                     <img src="${phoneDes.image}" class="card-img-top w-75"  alt="...">
                 </div>
                 <div class="col-6">
