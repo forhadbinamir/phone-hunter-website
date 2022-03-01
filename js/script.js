@@ -15,10 +15,11 @@ document.getElementById('search-button').addEventListener('click', function () {
 })
 
 const displayPhones = phones => {
-    // console.log(phones);
+    const slicephone = phones.slice(0, 20)
+    // console.log(slicephone);
     const cardField = document.getElementById('card-field');
-    phones.forEach(phone => {
-        console.log(phone)
+    slicephone.forEach(phone => {
+        // console.log(phone)
         const div = document.createElement('div')
         div.className = 'col-4'
         div.innerHTML = `
@@ -42,5 +43,42 @@ const showDetails = detailsphone => {
     const url = `https://openapi.programming-hero.com/api/phone/${detailsphone}`
     fetch(url)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => displayPhoneDetails(data.data))
+}
+
+const displayPhoneDetails = phoneDes => {
+    console.log(phoneDes)
+    const phoneDetails = document.getElementById('phone-details')
+    const cardField = document.getElementById('card-field');
+    cardField.textContent = '';
+    const div = document.createElement('div');
+    div.className = 'row mt-5';
+    div.innerHTML = `
+            <div class="col-6">
+                    <img src="${phoneDes.image}" class="card-img-top w-75"  alt="...">
+                </div>
+                <div class="col-6">
+                    <div class="card-body">
+                        <h3 class="card-title">${phoneDes.name}</h3>
+                        <h5 class="card-title">${phoneDes.brand}</h5>
+                        <p>${phoneDes.releaseDate}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">${phoneDes.mainFeatures.chipSet}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.displaySize}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.storage}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.memory}</li>
+                        
+                        <li class="list-group-item"><span class="fw-bold">Sensors</span></li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[0]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[1]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[2]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[3]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[4]}</li>
+                        <li class="list-group-item">${phoneDes.mainFeatures.sensors[5]}</li>
+                        
+                    </ul>
+                </div>
+    `
+    phoneDetails.appendChild(div)
 }
