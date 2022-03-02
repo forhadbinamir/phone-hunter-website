@@ -11,10 +11,16 @@
 #spinner{
     display: none;
 }
+#seemore{
+    display: none;
+}
 
 #warning1{
     display: none;
 }
 #warning2{
+    display: none;
+}
+#warning3{
     display: none;
 }
