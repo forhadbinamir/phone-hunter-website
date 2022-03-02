@@ -10,8 +10,6 @@ const seeMoreBtn = seeMore => {
 document.getElementById('search-button').addEventListener('click', function () {
     const inputField = document.getElementById('input-field');
     const inputValue = inputField.value;
-    const upperCase = inputValue.toUpperCase()
-    // console.log(upperCase)
     // display Spinner 
     loadingSpinner('block')
 
@@ -22,15 +20,11 @@ document.getElementById('search-button').addEventListener('click', function () {
         phoneDetails.textContent = ''
         document.getElementById('warning1').style.display = 'block';
         document.getElementById('warning2').style.display = 'none';
-        document.getElementById('warning3').style.display = 'none';
         seeMoreBtn('none')
     } else if (isNaN(inputValue) === false) {
         document.getElementById('warning2').style.display = 'block';
         document.getElementById('warning1').style.display = 'none';
-        document.getElementById('warning3').style.display = 'none';
         seeMoreBtn('none')
-    } else if (inputValue == upperCase) {
-        document.getElementById('warning3').style.display = 'block';
     }
     else {
 
@@ -43,8 +37,6 @@ document.getElementById('search-button').addEventListener('click', function () {
 
         document.getElementById('warning1').style.display = 'none';
         document.getElementById('warning2').style.display = 'none';
-        document.getElementById('warning3').style.display = 'none';
-
         seeMoreBtn('none')
 
     }
