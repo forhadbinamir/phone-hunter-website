@@ -6,12 +6,12 @@ const loadingSpinner = displayLoding => {
 const seeMoreBtn = seeMore => {
     document.getElementById('seemore').style.display = seeMore;
 }
-// clock event handler 
+// click event handler 
 document.getElementById('search-button').addEventListener('click', function () {
     const inputField = document.getElementById('input-field');
     const inputValue = inputField.value;
     const upperCase = inputValue.toUpperCase()
-    console.log(upperCase)
+    // console.log(upperCase)
     // display Spinner 
     loadingSpinner('block')
 
